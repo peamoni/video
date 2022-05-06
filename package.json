@@ -2,6 +2,7 @@
   "name": "videomoni",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://peamoni.github.io/video/",
   "dependencies": {
     "@remotion/bundler": "^3.0.3",
     "@remotion/cli": "^3.0.3",
