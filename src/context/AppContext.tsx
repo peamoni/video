@@ -1,6 +1,5 @@
 import React, { useState, FC, useContext, useEffect } from "react";
 
-import { initializeApp, FirebaseApp } from "firebase/app";
 import { onAuthStateChanged, User } from "@firebase/auth";
 import { auth } from "../firebase";
 
