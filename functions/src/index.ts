@@ -12,7 +12,7 @@ enum RunStatus {
   Downloaded,
 }
 
-export const intraday = functions
+export const render = functions
   .runWith({ secrets: ["GITHUB_ACTIONS_API_BEARER"] })
   .region("europe-west1")
   .https.onCall(async (data: { conf: any }, context: CallableContext) => {

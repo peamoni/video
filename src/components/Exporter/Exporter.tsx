@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { auth } from "../../firebase";
+import { auth, renderVideo } from "../../firebase";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 
 import "./Exporter.css";
@@ -11,6 +11,7 @@ const Exporter = () => {
   const exportVideo = useCallback(() => {
     // call firebase function
     console.log(video);
+    renderVideo(video);
   }, [video]);
   return (
     <div className="h-full">
