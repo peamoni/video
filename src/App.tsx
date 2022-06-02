@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+
+import Composer from "./components/Composer/Composer";
+import Viewer from "./components/Viewer/Viewer";
+import Exporter from "./components/Exporter/Exporter";
+import { AppProvider } from "./context/AppContext";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppProvider>
+      <div className="flex flex-row w-screen h-screen">
+        <div className="w-1/2 bg-red-300">
+          <Composer></Composer>
+        </div>
+        <div className="w-1/2 flex flex-col">
+          <div className="h-1/2 bg-blue-300">
+            <Viewer></Viewer>
+          </div>
+          <div className="h-1/2 bg-green-300">
+            <Exporter></Exporter>
+          </div>
+        </div>
+      </div>
+    </AppProvider>
   );
 }
 

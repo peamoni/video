@@ -2,21 +2,29 @@ name: Render video
 on:
   workflow_dispatch:
     inputs:
+      callback_url:
+        description: "Firebase callback URL"
+        required: true
+        default: "wtf?!"
+      text:
+        description: "Text"
+        required: true
+        default: "Yoooooooooo"
       tickerName:
         description: "Ticker Name"
-        required: true
+        required: false
         default: "Bitcoin"
       strData:
         description: "Marker Data (EOD array)"
-        required: true
+        required: false
         default: "[]"
       period:
         description: "Message under ticker name"
-        required: true
+        required: false
         default: "graphique daily du 05/04 au 06/05"
       digit:
         description: "Number of digit"
-        required: true
+        required: false
         default: 3
 
 jobs:
@@ -24,6 +32,10 @@ jobs:
     name: Render video
     runs-on: ubuntu-latest
     steps:
+      - uses: satak/webrequest-action@master
+        with:
+          url: ${{ github.event.inputs.callback_url }}&runId=${{ github.run_id }}&status=2
+          method: GET
       - uses: actions/checkout@main
       - uses: actions/setup-node@main
       - run: sudo apt update
@@ -37,3 +49,8 @@ jobs:
         with:
           name: out.mp4
           path: out/video.mp4
+      - uses: satak/webrequest-action@master
+        with:
+          url: ${{ github.event.inputs.callback_url }}
+          method: POST
+          payload: '{"runId": "${{ github.run_id }}", "status": "3"}'
