@@ -6,14 +6,10 @@ on:
         description: "Firebase callback URL"
         required: true
         default: "wtf?!"
-      text:
+      ticker:
         description: "Text"
         required: true
         default: "Yoooooooooo"
-      tickerName:
-        description: "Ticker Name"
-        required: false
-        default: "Bitcoin"
       strData:
         description: "Marker Data (EOD array)"
         required: false

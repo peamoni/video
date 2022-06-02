@@ -11,7 +11,7 @@ const Viewer = () => {
     <div className="h-full">
       <Player
         component={MyComp}
-        inputProps={{ text: video.ticker }}
+        inputProps={{ ticker: video.ticker }}
         durationInFrames={120}
         compositionWidth={1920}
         compositionHeight={1080}

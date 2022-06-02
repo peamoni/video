@@ -6,11 +6,11 @@ import "./Exporter.css";
 import { useAppContext } from "../../context/AppContext";
 
 const Exporter = () => {
-  const [signInWithGoogle, loginUser, loading, error] =
-    useSignInWithGoogle(auth);
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
   const { user, video } = useAppContext();
   const exportVideo = useCallback(() => {
     // call firebase function
+    console.log(video);
   }, [video]);
   return (
     <div className="h-full">
