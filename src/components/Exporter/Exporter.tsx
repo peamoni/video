@@ -10,8 +10,11 @@ const Exporter = () => {
   const { user, video } = useAppContext();
   const exportVideo = useCallback(async () => {
     // call firebase function
-    console.log({ conf: video });
-    console.log(await renderVideo({ conf: video }));
+    await renderVideo({
+      conf: {
+        ticker: video.ticker,
+      },
+    });
   }, [video]);
   return (
     <div className="h-full">

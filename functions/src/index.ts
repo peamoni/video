@@ -50,6 +50,15 @@ export const render = functions
         ref: process.env.GITHUB_ACTION_BRANCH,
       }),
     });
+    console.log(
+      JSON.stringify({
+        inputs: {
+          callback_url: callbackURL,
+          ...data.conf,
+        },
+        ref: process.env.GITHUB_ACTION_BRANCH,
+      })
+    );
     await response.text();
     if (response.status !== 200) {
       return { message: "Oups...", code: response.status };
@@ -66,6 +75,7 @@ export const update = functions
       const runId = req.query.runId as string;
       const status = parseInt(req.query.status as string);
 
+      console.log(uid, runId, status);
       if (!uid || !runId || !status) {
         resp.status(400).send("Bad request");
         return;
@@ -79,5 +89,6 @@ export const update = functions
         status,
         runId,
       });
+      resp.status(200).send("OK");
     }
   );
