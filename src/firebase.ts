@@ -16,7 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const functions = getFunctions(app);
+const functions = getFunctions(app, "europe-west1");
 
 const renderVideo = httpsCallable(functions, "render");
 

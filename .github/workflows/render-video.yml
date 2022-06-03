@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: satak/webrequest-action@master
         with:
-          url: ${{ github.event.inputs.callback_url }}&runId=${{ github.run_id }}&status=2
+          url: "${{ github.event.inputs.callback_url }}&runId=${{ github.run_id }}&status=2"
           method: GET
       - uses: actions/checkout@main
       - uses: actions/setup-node@main
@@ -47,6 +47,5 @@ jobs:
           path: out/video.mp4
       - uses: satak/webrequest-action@master
         with:
-          url: ${{ github.event.inputs.callback_url }}
-          method: POST
-          payload: '{"runId": "${{ github.run_id }}", "status": "3"}'
+          url: "${{ github.event.inputs.callback_url }}&runId=${{ github.run_id }}&status=3"
+          method: GET

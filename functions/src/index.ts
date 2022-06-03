@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import { CallableContext } from "firebase-functions/lib/providers/https";
+import fetch from "node-fetch";
 
 // The Firebase Admin SDK to access Firestore.
 import * as admin from "firebase-admin";
@@ -20,7 +21,6 @@ export const render = functions
     if (!context.auth) {
       return { message: "Authentication Required!", code: 401 };
     }
-
     // Insert run and get ID
     const writeResult = await admin
       .firestore()
@@ -50,9 +50,9 @@ export const render = functions
         ref: process.env.GITHUB_ACTION_BRANCH,
       }),
     });
-    const json = await response.json();
+    await response.text();
     if (response.status !== 200) {
-      return { message: json.message, code: response.status };
+      return { message: "Oups...", code: response.status };
     }
     return { message: { uid: writeResult.id }, code: 200 };
   });

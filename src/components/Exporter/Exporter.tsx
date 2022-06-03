@@ -8,10 +8,10 @@ import { useAppContext } from "../../context/AppContext";
 const Exporter = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
   const { user, video } = useAppContext();
-  const exportVideo = useCallback(() => {
+  const exportVideo = useCallback(async () => {
     // call firebase function
-    console.log(video);
-    renderVideo(video);
+    console.log({ conf: video });
+    console.log(await renderVideo({ conf: video }));
   }, [video]);
   return (
     <div className="h-full">
