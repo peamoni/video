@@ -21,7 +21,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const functions = getFunctions(app, "europe-west1");
-connectFunctionsEmulator(functions, "localhost", 5001);
+//connectFunctionsEmulator(functions, "localhost", 5001);
 
 const renderVideo = httpsCallable(functions, "render");
 
