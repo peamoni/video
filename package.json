@@ -6,6 +6,7 @@
   "dependencies": {
     "@remotion/bundler": "^3.0.4",
     "@remotion/cli": "^3.0.4",
+    "@remotion/gif": "^3.0.4",
     "@remotion/player": "^3.0.4",
     "@remotion/renderer": "^3.0.4",
     "@testing-library/jest-dom": "^5.16.4",
