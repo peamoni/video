@@ -88,18 +88,18 @@ export const update = functions
         artifact: null,
       };
       if (status === RunStatus.Created) {
-        const response = await fetch(
-          `${process.env.GITHUB_ACTION_URL!}/runs/${runId}/artifacts`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.GITHUB_ACTIONS_API_BEARER}`,
-            },
-          }
-        );
+        const url = `${process.env.GITHUB_ACTION_URL!}/runs/${runId}/artifacts`;
+        console.log(url, process.env.GITHUB_ACTIONS_API_BEARER);
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.GITHUB_ACTIONS_API_BEARER}`,
+          },
+        });
         const artifacts: { total_count: number; artifacts: any[] } =
           await response.json();
+        console.log(artifacts);
         if (artifacts.total_count === 1) {
           runData.artifact = artifacts.artifacts[0];
         }
@@ -146,6 +146,7 @@ export const video = functions
         return;
       }
       resp.set("Content-Type", "video/mp4");
+      resp.set("Content-Disposition", "attachment");
       resp.status(200).send(video.asNodeBuffer());
     }
   );
