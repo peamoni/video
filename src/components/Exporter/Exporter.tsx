@@ -26,7 +26,6 @@ const Exporter = () => {
   const fetchRenders = useCallback(async () => {
     if (user) {
       const r = await getRenders(user.uid);
-      console.log(r);
       setRenders(r);
     }
   }, [user, setRenders]);

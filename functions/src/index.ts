@@ -7,6 +7,16 @@ import UnZip = require("node-zip");
 import * as admin from "firebase-admin";
 admin.initializeApp();
 
+export interface Render {
+  uid: string;
+  artifact: any;
+  conf: any;
+  author_id: string;
+  runId: string;
+  status: number;
+  timestamp: number;
+}
+
 enum RunStatus {
   Waiting = 1,
   Rendering,
@@ -82,29 +92,15 @@ export const update = functions
         return;
       }
 
-      const runData = {
-        status,
-        runId,
-        artifact: null,
-      };
-      if (status === RunStatus.Created) {
-        const url = `${process.env.GITHUB_ACTION_URL!}/runs/${runId}/artifacts`;
-        console.log(url, process.env.GITHUB_ACTIONS_API_BEARER);
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.GITHUB_ACTIONS_API_BEARER}`,
-          },
+      await admin
+        .firestore()
+        .collection("renders")
+        .doc(uid)
+        .update({
+          ...run.data(),
+          runId,
+          status,
         });
-        const artifacts: { total_count: number; artifacts: any[] } =
-          await response.json();
-        console.log(artifacts);
-        if (artifacts.total_count === 1) {
-          runData.artifact = artifacts.artifacts[0];
-        }
-      }
-      await admin.firestore().collection("renders").doc(uid).update(runData);
       resp.status(200).send("OK");
     }
   );
@@ -125,12 +121,34 @@ export const video = functions
         resp.status(404).send("Run Not found");
         return;
       }
-      if (!run.data()!.artifact) {
-        resp.status(404).send("Artifact Not found");
-        return;
+
+      const runData = run.data() as Render;
+      if (!runData.artifact) {
+        if (runData.status === RunStatus.Created) {
+          const url = `${process.env.GITHUB_ACTION_URL!}/runs/${
+            runData.runId
+          }/artifacts`;
+          const response = await fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${process.env.GITHUB_ACTIONS_API_BEARER}`,
+            },
+          });
+          const artifacts: { total_count: number; artifacts: any[] } =
+            await response.json();
+          if (artifacts.total_count === 1) {
+            runData.artifact = artifacts.artifacts[0];
+            await admin
+              .firestore()
+              .collection("renders")
+              .doc(uid)
+              .update(runData);
+          }
+        }
       }
 
-      const response = await fetch(run.data()!.artifact.archive_download_url, {
+      const response = await fetch(runData.artifact.archive_download_url, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${process.env.GITHUB_ACTIONS_API_BEARER}`,
