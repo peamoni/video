@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { Player, PlayerRef } from "@remotion/player";
 import { MyComp } from "../../remotion/MyComp";
 import { CaretRight } from "react-bootstrap-icons";
@@ -6,6 +6,8 @@ import { CaretRight } from "react-bootstrap-icons";
 import "./Viewer.css";
 import { useAppContext } from "../../context/AppContext";
 import { getTickerName, getVideoDimentions, Template } from "../../model/types";
+import { quoteDuration } from "../../remotion/clips/Quote";
+import { CHART_DURATION } from "../../remotion/clips/Chart";
 
 const Viewer = () => {
   const { video } = useAppContext();
@@ -37,6 +39,10 @@ const Viewer = () => {
 
   const dimensions = getVideoDimentions(video.dimensions);
 
+  const quoteDur: number = useMemo(() => {
+    return video.type === Template.TextTicker ? quoteDuration(video.quote) : 0;
+  }, [video]);
+
   return (
     <div className="h-full relative" onClick={play}>
       <div
@@ -56,7 +62,7 @@ const Viewer = () => {
             video.type === Template.TextTicker ? getTickerName(video.coin) : "",
           quote: video.type === Template.TextTicker ? video.quote : "coucou",
         }}
-        durationInFrames={120}
+        durationInFrames={quoteDur + CHART_DURATION}
         compositionWidth={dimensions.width}
         compositionHeight={dimensions.height}
         fps={30}

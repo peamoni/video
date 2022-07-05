@@ -3,7 +3,6 @@ import "./App.css";
 
 import Composer from "./components/Composer/Composer";
 import Viewer from "./components/Viewer/Viewer";
-import Exporter from "./components/Exporter/Exporter";
 import { AppProvider } from "./context/AppContext";
 
 function App() {
