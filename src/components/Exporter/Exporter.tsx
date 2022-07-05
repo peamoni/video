@@ -9,7 +9,7 @@ import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 
 import "./Exporter.css";
 import { useAppContext } from "../../context/AppContext";
-import { Render } from "../../model/types";
+import { getTickerName, Render, Template } from "../../model/types";
 
 enum RunStatus {
   Waiting = 1,
@@ -54,7 +54,8 @@ const Exporter = () => {
   const exportVideo = useCallback(async () => {
     await renderVideo({
       conf: {
-        ticker: video.ticker,
+        ticker:
+          video.type === Template.TextTicker ? getTickerName(video.coin) : "",
       },
     });
     await fetchRenders();

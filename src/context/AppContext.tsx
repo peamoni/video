@@ -2,16 +2,25 @@ import React, { useState, FC, useContext, useEffect } from "react";
 
 import { onAuthStateChanged, User } from "@firebase/auth";
 import { auth } from "../firebase";
+import { Coins, Dimensions, Template } from "../model/types";
 
-enum BackgroundColors {
-  Dark = "DARK",
-  Light = "LIGHT",
-}
-
-type Videoprops = {
-  background: BackgroundColors;
-  ticker: string;
-};
+type Videoprops =
+  | {
+      dimensions: Dimensions;
+      type: Template.Unknow;
+    }
+  | {
+      dimensions: Dimensions;
+      type: Template.TextTicker;
+      coin: Coins;
+      quote: string;
+    }
+  | {
+      dimensions: Dimensions;
+      type: Template.TickerGif;
+      coin: Coins;
+      gif: string;
+    };
 
 interface IAppContext {
   user: User | null;
@@ -19,11 +28,13 @@ interface IAppContext {
   setVideo: (video: Videoprops) => void;
 }
 
-const defaultState = {
+const defaultState: IAppContext = {
   user: null,
   video: {
-    background: BackgroundColors.Dark,
-    ticker: "BTC-USD.CC",
+    dimensions: Dimensions.Square,
+    type: Template.TextTicker,
+    coin: Coins.Bitcoin,
+    quote: "",
   },
   setVideo: () => {},
 };
@@ -40,7 +51,6 @@ export const AppProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("authStateChange", user);
       setUser(user);
     });
   }, []);

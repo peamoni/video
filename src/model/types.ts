@@ -20,3 +20,55 @@ export interface Render {
   status: number;
   timestamp: number;
 }
+
+export enum Template {
+  Unknow = 1,
+  TextTicker,
+  TickerGif,
+}
+
+export enum Dimensions {
+  Square = 1,
+  Portrait,
+  Landscape,
+}
+
+export enum Coins {
+  Bitcoin = 1,
+  Ethereum,
+}
+
+export function getTickerName(ticker: Coins): string {
+  switch (ticker) {
+    case Coins.Bitcoin:
+      return "BTC-USD.CC";
+    case Coins.Ethereum:
+      return "ETH-USD.CC";
+    default:
+      return "Unknown";
+  }
+}
+
+export function getVideoDimentions(dimension: Dimensions): {
+  width: number;
+  height: number;
+} {
+  switch (dimension) {
+    case Dimensions.Square:
+      return {
+        width: 1080,
+        height: 1080,
+      };
+    case Dimensions.Portrait:
+      return {
+        width: 1080,
+        height: 1920,
+      };
+    case Dimensions.Landscape:
+    default:
+      return {
+        width: 1920,
+        height: 1080,
+      };
+  }
+}

@@ -16,8 +16,10 @@
     "@types/node": "^16.11.33",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
+    "bootstrap-icons": "^1.8.3",
     "firebase": "^9.8.1",
     "react": "^18.1.0",
+    "react-bootstrap-icons": "^1.8.2",
     "react-dom": "^18.1.0",
     "react-firebase-hooks": "^5.0.3",
     "react-icons": "^4.3.1",
@@ -32,7 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "video": "remotion preview src/remotion/index.tsx",
-    "render": "remotion render src/remotion/index.tsx videomoni out/video.mp4"
+    "render": "remotion render src/remotion/index.tsx textticker out/video.mp4"
   },
   "eslintConfig": {
     "extends": [
